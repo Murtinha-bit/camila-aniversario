@@ -1,0 +1,254 @@
+/*
+  O final. As cores dos campos e a tinta vêm de Pessoa.css (.capitulo[data-campo]).
+  O nome e a frase usam as mesmas letras mascaradas dos capítulos (.mascara, .palavra).
+*/
+
+/* ---------- 1. O mosaico, o nome e o 23 ---------- */
+
+.final {
+  /* o nome e o 23 dividem a largura: o tamanho vem das letras do nome mais as do 23 */
+  --tam-final: min(calc(88vw / (0.52 * var(--letras, 8) + 1.3)), 30svh);
+}
+
+.final__grade {
+  height: 100svh;
+  display: grid;
+  /* o mosaico ocupa tudo o que sobra acima do nome: a tela fica cheia */
+  grid-template-rows: minmax(0, 1fr) auto;
+}
+
+/* fotos e quadrados de cor encostados, sem espaço entre eles, de ponta a ponta */
+.final__mosaico {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  grid-template-areas:
+    'a a b c d e'
+    'f g h c i j';
+  overflow: clip;
+}
+
+.final__celula {
+  overflow: clip;
+  min-height: 0;
+}
+
+.final__celula--a { grid-area: a; }
+.final__celula--b { grid-area: b; }
+.final__celula--c { grid-area: c; }
+.final__celula--d { grid-area: d; }
+.final__celula--e { grid-area: e; }
+.final__celula--f { grid-area: f; }
+.final__celula--g { grid-area: g; }
+.final__celula--h { grid-area: h; }
+.final__celula--i { grid-area: i; }
+.final__celula--j { grid-area: j; }
+
+.final__celula[data-campo='rosa'] { background: var(--campo-rosa); }
+.final__celula[data-campo='pistache'] { background: var(--campo-pistache); }
+.final__celula[data-campo='tangerina'] { background: var(--campo-tangerina); }
+.final__celula[data-campo='verde'] { background: var(--campo-verde); }
+.final__celula[data-campo='musgo'] { background: var(--campo-musgo); }
+
+.final__celula picture,
+.final__celula img,
+.final__cor {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.final__celula img {
+  object-fit: cover;
+}
+
+.final__rodape {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--margem);
+  padding-block: var(--margem);
+  padding-inline: max(var(--margem), env(safe-area-inset-left, 0px)) max(var(--margem), env(safe-area-inset-right, 0px));
+  padding-bottom: max(var(--margem), env(safe-area-inset-bottom, 0px));
+}
+
+.final__nome,
+.final__idade {
+  font-size: var(--tam-final);
+  font-weight: var(--peso-titulo);
+  letter-spacing: -0.06em;
+  line-height: 0.8;
+  white-space: nowrap;
+}
+
+.final__idade {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- 2. A carta ---------- */
+
+.carta__grade {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(16px, 2vw, 32px);
+  padding-block: clamp(96px, 14svh, 160px) clamp(120px, 22svh, 240px);
+  padding-inline: max(var(--margem), env(safe-area-inset-left, 0px)) max(var(--margem), env(safe-area-inset-right, 0px));
+}
+
+.carta__texto {
+  grid-column: 3 / 11;
+  max-width: 62ch;
+  font-size: clamp(1.125rem, 1rem + 0.45vw, 1.375rem);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+.carta__texto > * + * {
+  margin-top: 1em;
+}
+
+/* as fotos que não couberam no mosaico, inclinadas como as dos capítulos, inteiras (sem recorte) */
+.carta__foto {
+  margin-block: 2em;
+  margin-inline: 0;
+  width: fit-content;
+  max-width: min(100%, 560px);
+  rotate: -2deg;
+}
+
+.carta__foto:nth-of-type(even) {
+  margin-left: auto;
+  rotate: 2deg;
+}
+
+.carta__foto img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 72svh;
+}
+
+/* as que sobram depois do texto: duas colunas, como fotos espalhadas na mesa */
+.carta__fotos {
+  grid-column: 2 / 12;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(32px, 5vw, 72px) clamp(16px, 3vw, 48px);
+  align-items: center;
+  margin-top: clamp(64px, 10svh, 120px);
+}
+
+.carta__fotos .carta__foto {
+  margin: 0;
+  max-width: 100%;
+  justify-self: center;
+}
+
+/* em xadrez: cada uma pende para o lado oposto da vizinha, em cima e ao lado */
+.carta__fotos .carta__foto:nth-child(4n + 1),
+.carta__fotos .carta__foto:nth-child(4n + 4) {
+  rotate: -2.5deg;
+}
+
+.carta__fotos .carta__foto:nth-child(4n + 2),
+.carta__fotos .carta__foto:nth-child(4n + 3) {
+  rotate: 2.5deg;
+}
+
+.carta__fotos .carta__foto img {
+  max-height: 70svh;
+}
+
+/* ---------- 3. O fecho ---------- */
+
+.fecho__grade {
+  min-height: 100svh;
+  display: grid;
+  align-content: end;
+  padding-block: var(--margem);
+  padding-inline: max(var(--margem), env(safe-area-inset-left, 0px)) max(var(--margem), env(safe-area-inset-right, 0px));
+  padding-bottom: max(var(--margem), env(safe-area-inset-bottom, 0px));
+}
+
+/*
+  Gigante: o tamanho vem da palavra mais longa, e a frase quebra entre as palavras.
+  Frase comprida: o terceiro limite encolhe a letra pelo total de letras, para tudo caber numa tela
+  ((50vw + 50svh) faz as vezes da raiz da área da tela).
+*/
+.fecho__frase {
+  font-size: min(
+    calc(92vw / (0.52 * var(--letras-palavra, 9))),
+    30svh,
+    calc(var(--raiz-letras, 0.2) * 1.15 * (50vw + 50svh))
+  );
+  font-weight: var(--peso-titulo);
+  letter-spacing: -0.06em;
+  line-height: 0.86;
+  text-wrap: balance;
+  /* folga para as letras que descem (q, p, g, vírgula) */
+  padding-bottom: 0.14em;
+}
+
+/* ---------- Celular ---------- */
+
+@media (max-width: 899px) {
+  .final {
+    --tam-final: min(calc(88vw / (0.52 * var(--letras, 8))), 30vw);
+  }
+
+  .final__mosaico {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-areas:
+      'a a c'
+      'f g h';
+  }
+
+  .final__celula--b,
+  .final__celula--d,
+  .final__celula--e,
+  .final__celula--i,
+  .final__celula--j {
+    display: none;
+  }
+
+  /* o 23 grande em cima, à direita; o nome embaixo */
+  .final__rodape {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-end;
+    padding-bottom: max(48px, env(safe-area-inset-bottom, 0px));
+  }
+
+  .final__idade {
+    align-self: flex-end;
+    font-size: 44vw;
+  }
+
+  .carta__grade {
+    padding-block: 88px 120px;
+  }
+
+  .carta__texto {
+    grid-column: 1 / 13;
+    font-size: 1.0625rem;
+  }
+
+  .fecho__frase {
+    font-size: min(
+      calc(88vw / (0.52 * var(--letras-palavra, 9))),
+      30svh,
+      calc(var(--raiz-letras, 0.2) * 1.15 * (50vw + 50svh))
+    );
+  }
+
+  .carta__fotos {
+    grid-column: 1 / 13;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fecho__grade {
+    padding-bottom: max(48px, env(safe-area-inset-bottom, 0px));
+  }
+}

@@ -1,0 +1,60 @@
+/*
+  Tokens do site. Todas as cores, fontes, espaços e tempos saem daqui.
+  Paleta A, "Pomar": o verde #556B2F com rosa, pistache e tangerina.
+  Cada campo (fundo de capítulo) tem a sua tinta (cor do texto), com o contraste WCAG anotado.
+*/
+:root {
+  /* Escala do verde da Camila */
+  --oliva-50: #f1f4e6;
+  --oliva-100: #dde6c2;
+  --oliva-200: #c3d396;
+  --oliva-300: #a3b86b;
+  --oliva-400: #7c934a;
+  --oliva-500: #556b2f;
+  --oliva-600: #445626;
+  --oliva-700: #34421d;
+  --oliva-800: #252f15;
+  --oliva-900: #171d0d;
+
+  --verde: var(--oliva-500);
+  --rosa: #ff9ec4;
+  --pistache: #c3d396;
+  --tangerina: #ff7a2f;
+  --acento: var(--rosa);
+  /* o papel das fotos dos capítulos (polaroid): um branco quente, para não brigar com os campos */
+  --papel-foto: #f8f5ee;
+
+  /* Campos e tintas */
+  --campo-verde: var(--verde);
+  --tinta-verde: var(--oliva-50); /* 5,33:1 AA */
+  --campo-rosa: var(--rosa);
+  --tinta-rosa: var(--oliva-800); /* 7,31:1 AAA */
+  --campo-pistache: var(--pistache);
+  --tinta-pistache: var(--oliva-700); /* 6,73:1 AA */
+  --campo-tangerina: var(--tangerina);
+  --tinta-tangerina: var(--oliva-900); /* 6,63:1 AA */
+  --campo-noite: var(--oliva-800);
+  --tinta-noite: var(--rosa); /* 7,31:1 AAA */
+  --campo-musgo: var(--oliva-700);
+  --tinta-musgo: var(--pistache); /* 6,73:1 AA */
+
+  /* Tipografia: uma família, três pesos */
+  --fonte: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --peso-texto: 400;
+  --peso-forte: 600;
+  --peso-titulo: 800;
+  --passo-pequeno: clamp(0.875rem, 0.85rem + 0.1vw, 0.9375rem);
+  --passo-corpo: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --passo-destaque: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
+  --passo-titulo: clamp(2.5rem, 1.4rem + 5vw, 6rem);
+
+  /* Espaço */
+  --margem: clamp(16px, 2.2vw, 32px);
+
+  /* Movimento */
+  --ease-saida: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-ida-volta: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-rapida: 220ms;
+  --dur-media: 420ms;
+  --dur-lenta: 900ms;
+}

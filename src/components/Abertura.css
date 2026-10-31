@@ -1,0 +1,412 @@
+.abertura {
+  /*
+    Tamanho do nome: enche a largura, sem passar de metade da altura.
+    --letras vem do componente; cada letra ocupa ~0,52em e o "23" ~1,3em.
+  */
+  --tam-nome: min(calc(94vw / (0.52 * var(--letras, 6) + 1.31)), 50svh);
+
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  padding-block: var(--margem);
+  padding-inline: max(var(--margem), env(safe-area-inset-left, 0px)) max(var(--margem), env(safe-area-inset-right, 0px));
+  background: var(--campo-verde);
+  color: var(--tinta-verde);
+  overflow: clip;
+  isolation: isolate;
+  touch-action: manipulation;
+}
+
+.abertura--com-mouse,
+.abertura--com-mouse .mosquito {
+  cursor: none;
+}
+
+/* Topo: a frase e a dica */
+.abertura__topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.abertura__frase,
+.abertura__dica {
+  font-size: var(--passo-destaque);
+  line-height: 1.2;
+  font-weight: var(--peso-forte);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.abertura__frase {
+  max-width: 24ch;
+}
+
+.abertura__dica {
+  max-width: 18ch;
+  text-align: right;
+  opacity: 0;
+  translate: 0 10px;
+  transition:
+    opacity var(--dur-media) ease,
+    translate var(--dur-lenta) var(--ease-saida);
+}
+
+.abertura__dica--visivel {
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* O título: Camila 23 */
+.abertura__titulo {
+  grid-row: 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.12em;
+  font-size: var(--tam-nome);
+  font-weight: var(--peso-titulo);
+  letter-spacing: -0.06em;
+  line-height: 0.8;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.palavra,
+.letra,
+.letra__corpo {
+  display: inline-block;
+}
+
+.letra__corpo {
+  transform-origin: 50% 100%;
+}
+
+.palavra--idade {
+  color: var(--rosa); /* 3,10:1 sobre o verde: só em tamanho grande */
+}
+
+.sonda {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  vertical-align: baseline;
+}
+
+.abertura--armada .letra__corpo {
+  visibility: hidden;
+}
+
+/* Rodapé: dica de rolar */
+.abertura__rodape {
+  grid-row: 4;
+  display: flex;
+  padding-top: clamp(14px, 2.4vh, 28px);
+  opacity: 0;
+  translate: 0 8px;
+  transition:
+    opacity var(--dur-media) ease 200ms,
+    translate var(--dur-lenta) var(--ease-saida) 200ms;
+}
+
+.abertura--caiu .abertura__rodape {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.rolar {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: var(--peso-forte);
+}
+
+.rolar__seta {
+  width: 14px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* boia algumas vezes e para: não fica se mexendo para sempre */
+  animation: boiar 1.8s var(--ease-ida-volta) 1s 4;
+}
+
+@keyframes boiar {
+  0%,
+  100% {
+    translate: 0 -2px;
+  }
+  50% {
+    translate: 0 4px;
+  }
+}
+
+/* Mosquito */
+.mosquito {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 3;
+  width: clamp(56px, calc(var(--tam-nome) * 0.42), 150px);
+  aspect-ratio: 120 / 80;
+  padding: 0;
+  border: 0;
+  background: none;
+  transform-origin: 50% 45%;
+  touch-action: manipulation;
+}
+
+.mosquito[hidden] {
+  display: none;
+}
+
+/* hover: o mosquito arregala o olho */
+.mosquito__olho,
+.mosquito__pupila {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: scale var(--dur-rapida) var(--ease-saida);
+}
+
+@media (hover: hover) {
+  .mosquito:hover .mosquito__olho {
+    scale: 1.35;
+  }
+
+  .mosquito:hover .mosquito__pupila {
+    scale: 0.7;
+  }
+}
+
+.mosquito:focus-visible {
+  outline-offset: 0;
+}
+
+.mosquito__corpo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: 50% 45%;
+}
+
+.mosquito svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.mosquito__silhueta {
+  fill: var(--oliva-900);
+}
+
+.mosquito__listras {
+  fill: var(--rosa);
+}
+
+.mosquito__pernas path,
+.mosquito__ferrao,
+.mosquito__antena {
+  fill: none;
+  stroke: var(--oliva-900);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.mosquito__olho {
+  fill: var(--oliva-50);
+}
+
+.mosquito__pupila {
+  fill: var(--oliva-900);
+}
+
+.mosquito__asa {
+  fill: var(--oliva-50);
+  opacity: 0.6;
+  transform-box: view-box;
+}
+
+.mosquito__asa--frente {
+  transform-origin: 58px 30px;
+}
+
+.mosquito__asa--tras {
+  transform-origin: 54px 30px;
+  opacity: 0.4;
+}
+
+.mosquito--voando .mosquito__asa--frente {
+  animation: bater 46ms linear infinite alternate;
+}
+
+.mosquito--voando .mosquito__asa--tras {
+  animation: bater 46ms linear infinite alternate-reverse;
+}
+
+@keyframes bater {
+  from {
+    transform: rotate(-6deg) scaleY(1);
+  }
+  to {
+    transform: rotate(30deg) scaleY(0.35);
+  }
+}
+
+.mosquito--choque .mosquito__silhueta {
+  animation: choque 460ms steps(1);
+}
+
+.mosquito--choque .mosquito__pernas path {
+  animation: choque-traco 460ms steps(1);
+}
+
+@keyframes choque {
+  0%,
+  50% {
+    fill: var(--oliva-50);
+  }
+  25%,
+  75% {
+    fill: var(--oliva-900);
+  }
+}
+
+@keyframes choque-traco {
+  0%,
+  50% {
+    stroke: var(--oliva-50);
+  }
+  25%,
+  75% {
+    stroke: var(--oliva-900);
+  }
+}
+
+/* Faísca da raquetada */
+.faisca {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 4;
+  width: 160px;
+  height: 160px;
+  margin: -80px 0 0 -80px;
+  opacity: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.faisca__raio {
+  stroke: var(--rosa);
+  stroke-width: 7;
+  stroke-linecap: round;
+}
+
+.faisca__raio--b {
+  stroke: var(--tangerina);
+}
+
+/* Raquete (cursor) */
+.raquete {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 50;
+  width: 84px;
+  pointer-events: none;
+  opacity: 0;
+  transform-origin: 50% 32%;
+  transition: opacity var(--dur-rapida) ease;
+}
+
+.raquete--visivel {
+  opacity: 1;
+}
+
+.raquete svg {
+  width: 100%;
+  overflow: visible;
+}
+
+.raquete__fundo {
+  fill: var(--oliva-50);
+  opacity: 0.16;
+}
+
+.raquete__tela path {
+  stroke: var(--oliva-50);
+  stroke-width: 1.6;
+  opacity: 0.8;
+}
+
+.raquete__aro {
+  fill: none;
+  stroke: var(--oliva-900);
+  stroke-width: 7;
+}
+
+.raquete__pescoco {
+  fill: var(--oliva-900);
+}
+
+.raquete__cabo {
+  fill: var(--tangerina);
+}
+
+.raquete__botao {
+  fill: var(--rosa);
+}
+
+/* Celular: o nome em cima, o 23 enorme embaixo */
+@media (max-width: 640px) {
+  .abertura {
+    --tam-nome: calc(89vw / (0.52 * var(--letras, 6)));
+  }
+
+  .abertura__topo {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .abertura__dica {
+    text-align: left;
+  }
+
+  .abertura__titulo {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+
+  .palavra--idade {
+    align-self: flex-end;
+    font-size: 2.9em;
+    line-height: 0.78;
+    margin-top: 0.02em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rolar__seta {
+    animation: none;
+  }
+
+  .abertura__dica,
+  .abertura__rodape {
+    transition-duration: 1ms;
+  }
+
+  .letra__corpo {
+    animation: aparecer 400ms ease both;
+  }
+
+  @keyframes aparecer {
+    from {
+      opacity: 0;
+    }
+  }
+}

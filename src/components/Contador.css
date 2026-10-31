@@ -1,0 +1,60 @@
+.contador {
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + var(--margem));
+  right: max(var(--margem), env(safe-area-inset-right, 0px));
+  z-index: 40;
+  display: flex;
+  align-items: baseline;
+  gap: 0.28em;
+  font-size: var(--passo-destaque);
+  font-weight: var(--peso-titulo);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--contador-cor, var(--tinta-verde));
+  pointer-events: none;
+  opacity: 0;
+  translate: 0 -12px;
+  transition:
+    opacity var(--dur-media) ease,
+    translate var(--dur-lenta) var(--ease-saida),
+    color var(--dur-media) ease;
+}
+
+.contador--visivel {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.contador__atual {
+  display: inline-flex;
+}
+
+.contador__barra,
+.contador__total {
+  opacity: 0.72;
+}
+
+.rolo {
+  display: inline-block;
+  height: 1em;
+  overflow: clip;
+}
+
+.rolo__fita {
+  display: flex;
+  flex-direction: column;
+  translate: 0 calc(var(--valor) * -1em);
+  transition: translate 700ms var(--ease-saida);
+}
+
+.rolo__fita > span {
+  height: 1em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contador,
+  .rolo__fita {
+    transition-duration: 1ms;
+  }
+}

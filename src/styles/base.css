@@ -1,0 +1,90 @@
+@import "@fontsource/schibsted-grotesk/latin-400.css";
+@import "@fontsource/schibsted-grotesk/latin-600.css";
+@import "@fontsource/schibsted-grotesk/latin-800.css";
+@import "lenis/dist/lenis.css";
+@import "./tokens.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* sem "elástico" no fim da página com mouse/trackpad; no celular fica o padrão */
+@media (pointer: fine) {
+  html {
+    overscroll-behavior: none;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--campo-verde);
+  color: var(--tinta-verde);
+  font: var(--peso-texto) var(--passo-corpo) / 1.45 var(--fonte);
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: var(--rosa);
+  color: var(--oliva-800);
+}
+
+:focus-visible {
+  outline: 3px solid var(--rosa);
+  outline-offset: 4px;
+}
+
+/* Encaixe nativo (celular e movimento reduzido): para em cada capítulo, um por swipe */
+main {
+  position: relative;
+}
+
+html.encaixe-nativo {
+  scroll-snap-type: y mandatory;
+}
+
+.encaixe {
+  position: absolute;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.so-leitor {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

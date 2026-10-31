@@ -1,0 +1,42 @@
+/* O mosquito dos capítulos: vira o pingo do i ou pousa no contador */
+.companheiro {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 41; /* acima do contador, para pousar em cima dele */
+  width: 120px;
+  height: 80px;
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+
+.companheiro[hidden] {
+  display: none;
+}
+
+.companheiro svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* o corpo na cor do texto do capítulo e as listras na cor do campo, para aparecer em qualquer campo */
+.companheiro .mosquito__silhueta {
+  fill: var(--mosq-corpo, var(--oliva-900));
+}
+
+.companheiro .mosquito__pernas path,
+.companheiro .mosquito__ferrao,
+.companheiro .mosquito__antena {
+  stroke: var(--mosq-corpo, var(--oliva-900));
+}
+
+.companheiro .mosquito__listras {
+  fill: var(--mosq-listra, var(--rosa));
+}
+
+/* é o mesmo mosquito: enquanto ele acompanha os capítulos, o da abertura some */
+.mosquito-acompanhando .abertura .mosquito {
+  visibility: hidden;
+}

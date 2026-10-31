@@ -1,0 +1,185 @@
+/* A surpresa usa o layout "apoiada" de Pessoa.css; aqui só o que é dela */
+
+/* as letras do nome caem de cima, então não podem ser recortadas pela máscara */
+.surpresa .mascara {
+  overflow: visible;
+}
+
+/* ---------- O quadro: moldura escura com chanfro, passe-partout claro e o vídeo dentro ---------- */
+
+.surpresa__video {
+  --borda: clamp(10px, 1.1vw, 16px);
+  --passe: clamp(10px, 1.5vw, 22px);
+  --dentro: calc(var(--borda) + var(--passe));
+  /* as fotos dos capítulos são polaroids em content-box; o quadro faz as contas com a moldura inclusa */
+  box-sizing: border-box;
+  padding: var(--borda);
+  background: linear-gradient(145deg, var(--oliva-700), var(--oliva-900) 70%);
+  box-shadow:
+    /* o chanfro da moldura: luz em cima à esquerda, sombra embaixo à direita */
+    inset 2px 2px 0 rgb(255 255 255 / 0.14),
+    inset -2px -2px 0 rgb(0 0 0 / 0.4),
+    /* o quadro pendurado, saindo da parede */
+    0 24px 48px -16px rgb(0 0 0 / 0.5),
+    0 4px 10px rgb(0 0 0 / 0.18);
+}
+
+/* a altura do quadro é a do espaço em cima do nome; a largura segue o vídeo, mais a moldura */
+.pessoa--apoiada .surpresa__video {
+  --altura: min(var(--acima-do-nome), 760px);
+  height: var(--altura);
+  width: min(100%, calc((var(--altura) - 2 * var(--dentro)) * var(--proporcao) + 2 * var(--dentro)));
+  aspect-ratio: auto;
+}
+
+.surpresa__passepartout {
+  height: 100%;
+  padding: var(--passe);
+  background: var(--oliva-50);
+  /* a moldura faz uma sombrinha por cima do passe-partout */
+  box-shadow: inset 0 3px 8px rgb(0 0 0 / 0.28);
+}
+
+.surpresa__tela {
+  position: relative;
+  height: 100%;
+  overflow: clip;
+  background: var(--oliva-900);
+  /* o corte chanfrado do passe-partout em volta do vídeo */
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.18), 0 1px 0 1px rgb(255 255 255 / 0.6);
+}
+
+.surpresa__tela video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* se o formato não bater por pouco, sobra uma faixa escura em vez de cortar o vídeo */
+  object-fit: contain;
+}
+
+/* ---------- Os controles: o vídeo inteiro é o botão ---------- */
+
+.surpresa__botao {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--tinta);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.surpresa__icone {
+  display: grid;
+  place-items: center;
+  width: clamp(64px, 8vw, 96px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--campo);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.3);
+  transition:
+    opacity var(--dur-media) var(--ease-saida),
+    scale var(--dur-media) var(--ease-saida);
+}
+
+.surpresa__icone svg {
+  width: 44%;
+  fill: currentColor;
+}
+
+/* o triângulo parece torto no centro exato: um empurrãozinho para a direita */
+.surpresa__botao:not(.surpresa__botao--tocando) .surpresa__icone svg {
+  translate: 6% 0;
+}
+
+/* tocando: o botão some e só volta (como pausa) quando o mouse passa por cima */
+.surpresa__botao--tocando .surpresa__icone {
+  opacity: 0;
+  scale: 0.8;
+}
+
+@media (hover: hover) {
+  .surpresa__botao:hover .surpresa__icone {
+    scale: 1.08;
+  }
+
+  .surpresa__botao--tocando:hover .surpresa__icone {
+    opacity: 0.85;
+    scale: 1;
+  }
+}
+
+.surpresa__botao:active .surpresa__icone {
+  scale: 0.94;
+}
+
+.surpresa__botao:focus-visible {
+  outline: 3px solid var(--campo);
+  outline-offset: -3px;
+}
+
+.surpresa__botao:focus-visible .surpresa__icone {
+  opacity: 1;
+}
+
+/* quanto do vídeo já passou: uma linha fina na cor do campo, no pé do vídeo */
+.surpresa__progresso {
+  position: absolute;
+  inset: auto 0 0;
+  height: 4px;
+  background: rgb(255 255 255 / 0.22);
+  pointer-events: none;
+}
+
+.surpresa__progresso::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--campo);
+  transform-origin: 0 50%;
+  scale: var(--progresso, 0) 1;
+  transition: scale 260ms linear;
+}
+
+/* ---------- Celular: a frase primeiro, depois o nome, depois o quadro ---------- */
+
+@media (max-width: 899px) {
+  /* "Gosuen" só tem letras largas: a conta dos capítulos (0,52 por letra) deixaria o "n" fora da tela */
+  .pessoa.surpresa {
+    --tam-nome: min(calc(88vw / (0.64 * var(--letras, 6))), 30vw);
+  }
+
+  .surpresa .surpresa__frase {
+    order: 1;
+  }
+
+  .surpresa .pessoa__nome {
+    order: 2;
+    margin-top: 0;
+  }
+
+  .surpresa .surpresa__video {
+    order: 3;
+    /* em pé, não ocupa a largura toda (para caber na tela com o nome); deitado, vai de lado a lado */
+    --altura: min(
+      54svh,
+      calc((100vw - 2 * var(--margem) - 2 * var(--dentro)) / var(--proporcao) + 2 * var(--dentro))
+    );
+    height: var(--altura);
+    width: min(100%, calc((var(--altura) - 2 * var(--dentro)) * var(--proporcao) + 2 * var(--dentro)));
+    max-height: none;
+    max-width: 100%;
+    align-self: center;
+    aspect-ratio: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .surpresa__icone,
+  .surpresa__progresso::after {
+    transition-duration: 1ms;
+  }
+}
