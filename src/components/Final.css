@@ -194,8 +194,22 @@
 /* ---------- Celular ---------- */
 
 @media (max-width: 899px) {
+  /*
+    O nome pode quebrar entre as palavras: o tamanho vem da palavra mais longa e, se o nome for
+    uma frase, do total de letras, para caber em umas três linhas (numa linha só ficava minúsculo).
+  */
   .final {
-    --tam-final: min(calc(88vw / (0.52 * var(--letras, 8))), 30vw);
+    --tam-final: min(
+      calc(88vw / (0.52 * var(--letras-palavra, 8))),
+      calc(3 * 88vw / (0.52 * var(--letras, 8))),
+      30vw
+    );
+  }
+
+  .final__nome {
+    white-space: normal;
+    line-height: 0.86;
+    text-wrap: balance;
   }
 
   .final__mosaico {

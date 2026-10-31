@@ -355,9 +355,9 @@
     justify-self: auto;
   }
 
+  /* logo abaixo da polaroid, sem encostar nela (por cima, cobria a faixa de baixo e um pedaço da foto) */
   .pessoa__nome {
     order: 3;
-    margin-top: -0.42em;
   }
 
   .pessoa .pessoa__recado {
@@ -366,10 +366,6 @@
     max-width: none;
     margin: 0;
     font-size: var(--passo-destaque);
-  }
-
-  .pessoa--sem-foto .pessoa__nome {
-    margin-top: 0;
   }
 
   .pessoa--sem-foto .pessoa__recado {
@@ -389,10 +385,6 @@
   .pessoa--recado .pessoa__foto {
     align-self: flex-start;
     width: calc(64% - var(--papel-x));
-  }
-
-  .pessoa--recado .pessoa__nome {
-    margin-top: 0;
   }
 
   .pessoa--recado .pessoa__recado {
@@ -417,10 +409,6 @@
     width: calc(46% - var(--papel-x));
     align-self: flex-end;
     margin-top: -44%;
-  }
-
-  .pessoa--duas .pessoa__nome {
-    margin-top: 0;
   }
 }
 

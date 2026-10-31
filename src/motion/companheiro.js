@@ -104,7 +104,8 @@ export function criarCompanheiro({ main, el, reduzido }) {
     if (sonda && fonte && !(sonda.dataset.pingo === 'I' && desistiu)) {
       const letra = sonda.parentElement.getBoundingClientRect()
       const base = sonda.getBoundingClientRect().top
-      const largura = limitar(44, fonte * 0.42, 150)
+      // em letra pequena (nome comprido no celular) ele encolhe junto, para não cobrir a palavra
+      const largura = limitar(30, fonte * 0.42, 150)
       if (sonda.dataset.pingo === 'i') {
         const m = medirPingo(FAMILIA, 800, fonte)
         return { x: letra.left + m.avanco / 2 + m.dx, y: base + m.dy, largura, tipo: 'pingo' }

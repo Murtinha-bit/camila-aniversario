@@ -95,7 +95,10 @@ export default function Final({ numero }) {
         data-entrada="final"
         data-sem-contador
         aria-labelledby="final-nome"
-        style={{ '--letras': [...namorado.nome].length }}
+        style={{
+          '--letras': [...namorado.nome].length,
+          '--letras-palavra': Math.max(...namorado.nome.split(/\s+/).map((p) => [...p].length)),
+        }}
       >
         <div className="final__grade">
           <div className="final__mosaico">
